@@ -9,7 +9,7 @@ export class OrderController {
 
     return res.status(201).send({
       message: "Order created successfully",
-      order: result,
+      data: result,
     });
   }
 }

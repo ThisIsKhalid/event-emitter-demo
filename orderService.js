@@ -1,20 +1,16 @@
-export class OrderService {
-  constructor(emailService, enventoryService) {
-    this.emailService = emailService;
-    this.enventoryService = enventoryService;
-  }
+import { EventEmitter } from "node:events";
 
+export class OrderService extends EventEmitter {
   createOrder(orderData) {
     // Business logic to create an order
 
-    console.log("Order created:", orderData);
+    console.log("Order created");
+    this.emit("order:created", orderData);
+    console.log("Event emitted: order:created");
 
-    // Send confirmation email
-    this.emailService.sendEmail(orderData);
-
-    // Update inventory
-    this.enventoryService.updateInventory(orderData);
-
-    return { ...orderData };
+    return {
+      id: Date.now().toString(),
+      ...orderData,
+    };
   }
 }
