@@ -10,20 +10,22 @@ const port = 3000;
 app.use(express.json());
 
 // dependency initialization
-const emailService = new EmailService();
-const enventoryService = new EnventoryService();
 const orderService = new OrderService();
+
+const emailService = new EmailService(orderService);
+const enventoryService = new EnventoryService();
+
 const orderController = new OrderController(orderService);
 
 // register event listeners
-orderService.on("order:created", async (orderData) => {
-  console.log(
-    "Event received: order:created, sending email processing",
-    orderData
-  );
+// orderService.on("order:created", async (orderData) => {
+//   console.log(
+//     "Event received: order:created, sending email processing",
+//     orderData
+//   );
 
-  emailService.sendEmail(orderData);
-});
+//   emailService.sendEmail(orderData);
+// });
 
 orderService.on("order:created", async (orderData) => {
   console.log("Event received: order:created, enventory processing", orderData);
